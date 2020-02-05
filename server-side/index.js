@@ -21,7 +21,7 @@ io.on("connection", socket => {
     socket.join(user.room);
     socket.emit("message", {
       user: "admin",
-      text: `Welcome to ${user.room} Chat Room, ${user.name}`
+      text: `Welcome to ${user.room}! ${user.name}`
     });
     socket.broadcast
       .to(user.room)
@@ -29,11 +29,19 @@ io.on("connection", socket => {
   });
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit("message", { user: user.name, text: message });
-    callback();
+    if (user) {
+      io.to(user.room).emit("message", { user: user.name, text: message });
+      callback();
+    }
   });
   socket.on("disconnect", () => {
-    console.log("You left the Chat Room//////////");
+    const user = getUser(socket.id);
+    if (user) {
+      socket.broadcast
+        .to(user.room)
+        .emit("message", { user: "admin", text: `${user.name} left the chat` });
+      removeUser(socket.id);
+    }
   });
 });
 

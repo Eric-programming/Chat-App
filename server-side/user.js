@@ -1,21 +1,24 @@
 const users = [];
 
 exports.addUser = ({ id, name, room }) => {
-  name = name.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+  if (name && room) {
+    name = name.trim().toLowerCase();
+    room = room.trim().toLowerCase();
 
-  let checkIfUserExistsInSameRoom = false;
-  users.forEach(user => {
-    if (user.name === name && user.room === room) {
-      checkIfUserExistsInSameRoom = true;
+    let checkIfUserExistsInSameRoom = false;
+    users.forEach(user => {
+      if (user.name === name && user.room === room) {
+        checkIfUserExistsInSameRoom = true;
+      }
+    });
+    if (checkIfUserExistsInSameRoom) {
+      return { error: "Duplicate User!" };
     }
-  });
-  if (checkIfUserExistsInSameRoom) {
-    return { error: "Duplicate User!" };
+    const user = { id, name, room };
+    users.push(user);
+    console.log("users", users);
+    return { user };
   }
-  const user = { id, name, room };
-  users.push(user);
-  return user;
 };
 
 exports.removeUser = id => {
