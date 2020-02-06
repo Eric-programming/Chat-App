@@ -2,8 +2,8 @@ import React from "react";
 
 import "./InfoBar-style.css";
 
-const InfoBar = ({ room }) => (
-  <div className="infoBar">
+const InfoBar = ({ room, theme }) => (
+  <div className={`infobar-${theme}`}>
     <div className="leftInnerContainer">
       <img
         className="onlineIcon"

@@ -5,23 +5,32 @@ const {
   addUser,
   removeUser,
   getAllUsersFromARoom,
-  getUser
+  getUser,
+  makeUserIsTyping
 } = require("./user");
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
 io.on("connection", socket => {
-  console.log("/////////Welcome to the Chat!");
   socket.on("join", ({ name, room }, callback) => {
-    const { error, user } = addUser({ id: socket.id, name, room });
+    const { error, user } = addUser({
+      id: socket.id,
+      name,
+      room,
+      isTyping: false
+    });
     if (error) {
       return callback(error);
     }
     socket.join(user.room);
+
     socket.emit("message", {
       user: "admin",
       text: `Welcome to ${user.room}! ${user.name}`
+    });
+    io.to(user.room).emit("userData", {
+      users: getAllUsersFromARoom(user.room)
     });
     socket.broadcast
       .to(user.room)
@@ -42,6 +51,12 @@ io.on("connection", socket => {
         .emit("message", { user: "admin", text: `${user.name} left the chat` });
       removeUser(socket.id);
     }
+  });
+  socket.on("isTyping", (room, boolean) => {
+    makeUserIsTyping(socket.id, boolean);
+    io.to(room).emit("userData", {
+      users: getAllUsersFromARoom(room)
+    });
   });
 });
 

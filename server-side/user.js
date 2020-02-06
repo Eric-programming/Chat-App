@@ -16,7 +16,6 @@ exports.addUser = ({ id, name, room }) => {
     }
     const user = { id, name, room };
     users.push(user);
-    console.log("users", users);
     return { user };
   }
 };
@@ -26,5 +25,14 @@ exports.removeUser = id => {
   return users.splice(index);
 };
 
-exports.getAllUsersFromARoom = room => users.map(user => user.room === room);
+exports.getAllUsersFromARoom = room => users.filter(user => user.room === room);
 exports.getUser = id => users.find(user => user.id === id);
+
+exports.makeUserIsTyping = (id, typed) => {
+  users.forEach(eachUser => {
+    if (eachUser.id === id) {
+      eachUser.isTyping = typed;
+    }
+  });
+  console.log("users", users);
+};

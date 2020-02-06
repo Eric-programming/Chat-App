@@ -18,13 +18,8 @@ const Chat = ({ location, history }) => {
   const [room, setRoom] = useState("");
   const [currentMessage, setCurrentMessage] = useState("");
   const [allMessagesArray, setAllMessagesArray] = useState([]);
-
-  const cleanAllState = () => {
-    setName("");
-    setRoom("");
-    setCurrentMessage("");
-    setAllMessagesArray([]);
-  };
+  const [users, setUsers] = useState([]);
+  const [theme, setTheme] = useState("blue");
   //UseEffects========================
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -36,6 +31,8 @@ const Chat = ({ location, history }) => {
         history.push("/");
       }
     });
+    setName(name);
+    setRoom(room);
 
     return () => {
       socketFrontEnd.emit("disconnect");
@@ -46,6 +43,9 @@ const Chat = ({ location, history }) => {
   useEffect(() => {
     socketFrontEnd.on("message", currentMessage => {
       setAllMessagesArray([...allMessagesArray, currentMessage]);
+    });
+    socketFrontEnd.on("userData", ({ users }) => {
+      setUsers(users);
     });
   }, [allMessagesArray]);
   //UseEffects========================
@@ -59,19 +59,26 @@ const Chat = ({ location, history }) => {
       );
     }
   };
-
+  useEffect(() => {
+    if (currentMessage !== "") {
+      socketFrontEnd.emit("isTyping", room, true);
+    } else {
+      socketFrontEnd.emit("isTyping", room, false);
+    }
+  }, [currentMessage]);
   return (
     <div className="outerContainer">
       <div className="container">
-        <InfoBar room={room} />
+        <InfoBar room={room} theme={theme} />
         <AllMessages messages={allMessagesArray} name={name} />
         <Input
           message={currentMessage}
           setMessage={setCurrentMessage}
           sendMessage={sendMessageFunc}
+          theme={theme}
         />
       </div>
-      {/* <TextContainer users={users} /> */}
+      <TextContainer users={users} name={name} changeColorFunc={setTheme} />
     </div>
   );
 };

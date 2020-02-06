@@ -1,43 +1,29 @@
 import React from "react";
 import "./TextContainer-style.css";
+import SelectColor from "./SelectColor/SelectColor";
 
-const TextContainer = ({ users }) => (
+const TextContainer = ({ users, name, changeColorFunc }) => (
   <div className="textContainer">
     <div>
-      <h1>
-        Realtime Chat Application{" "}
-        <span role="img" aria-label="emoji">
-          💬
-        </span>
-      </h1>
-      <h2>
-        Created with React, Express, Node and Socket.IO{" "}
-        <span role="img" aria-label="emoji">
-          ❤️
-        </span>
-      </h2>
-      <h2>
-        Try it out right now!{" "}
-        <span role="img" aria-label="emoji">
-          ⬅️
-        </span>
-      </h2>
+      <h1>Current Account: {name}</h1>
+      <h2>You can change the color:</h2>
+      <SelectColor changeColor={changeColorFunc} />
     </div>
     {users ? (
       <div>
-        <h1>People currently chatting:</h1>
+        <h1>Online:</h1>
         <div className="activeContainer">
-          <h2>
-            {users.map(({ name }) => (
+          <h3>
+            {users.map(({ name, isTyping }) => (
               <div key={name} className="activeItem">
-                {name}
                 <img
                   alt="Online Icon"
                   src="https://raw.githubusercontent.com/adrianhajdin/project_chat_application/master/client/src/icons/onlineIcon.png"
                 />
+                {name} {isTyping ? "is typing..." : null}
               </div>
             ))}
-          </h2>
+          </h3>
         </div>
       </div>
     ) : null}

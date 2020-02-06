@@ -16,10 +16,11 @@
 .activeItem {
   display: flex;
   align-items: center;
+  margin-top: 7%;
 }
 
 .activeContainer img {
-  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .textContainer h1 {

@@ -27,3 +27,28 @@ select:focus {
   border: none;
   width: 20%;
 }
+:root {
+  --blue: #4ca3dd;
+  --grey: #696969;
+  --gold: #daa520;
+}
+.button-blue,
+.button-gold,
+.button-grey {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+  border: none;
+  width: 20%;
+}
+.button-blue {
+  background: var(--blue);
+}
+.button-gold {
+  background: var(--gold);
+}
+.button-grey {
+  background: var(--grey);
+}

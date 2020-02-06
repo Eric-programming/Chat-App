@@ -1,0 +1,26 @@
+:root {
+  --blue: #4ca3dd;
+  --grey: #696969;
+  --gold: #daa520;
+}
+.select-color-blue,
+.select-color-grey,
+.select-color-gold {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-left: 30px;
+}
+.select-color-grey {
+  background-color: var(--grey);
+  border: 1px solid var(--grey);
+}
+
+.select-color-blue {
+  background-color: var(--blue);
+  border: 1px solid var(--blue);
+}
+.select-color-gold {
+  background-color: var(--gold);
+  border: 1px solid var(--gold);
+}

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Input-style.css";
 
-const Input = ({ setMessage, sendMessage, message }) => (
+const Input = ({ setMessage, sendMessage, message, theme }) => (
   <form className="form">
     <input
       className="input"
@@ -12,7 +12,7 @@ const Input = ({ setMessage, sendMessage, message }) => (
       onChange={e => setMessage(e.target.value)}
       onKeyPress={e => (e.key === "Enter" ? sendMessage(e) : null)}
     />
-    <button className="sendButton" onClick={e => sendMessage(e)}>
+    <button className={`button-${theme}`} onClick={e => sendMessage(e)}>
       Send
     </button>
   </form>

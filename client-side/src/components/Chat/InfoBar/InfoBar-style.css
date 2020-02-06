@@ -1,11 +1,26 @@
-.infoBar {
+:root {
+  --blue: #4ca3dd;
+  --grey: #696969;
+  --gold: #daa520;
+}
+.infobar-blue,
+.infobar-gold,
+.infobar-grey {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #2979ff;
   border-radius: 4px 4px 0 0;
   height: 60px;
   width: 100%;
+}
+.infobar-blue {
+  background: var(--blue);
+}
+.infobar-gold {
+  background: var(--gold);
+}
+.infobar-grey {
+  background: var(--grey);
 }
 
 .leftInnerContainer {
