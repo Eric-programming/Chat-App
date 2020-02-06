@@ -1,6 +1,8 @@
 const express = require("express");
 const socketIO = require("socket.io");
 const http = require("http");
+const cors = require("cors");
+
 const {
   addUser,
   removeUser,
@@ -9,6 +11,7 @@ const {
   makeUserIsTyping
 } = require("./user");
 const app = express();
+
 const server = http.createServer(app);
 const io = socketIO(server);
 
@@ -60,8 +63,8 @@ io.on("connection", socket => {
   });
 });
 
-app.use("/", require("./router"));
-
+app.use("/", require("./router")); //Test reason
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
