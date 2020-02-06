@@ -13,7 +13,7 @@ import TextContainer from "./Textfield/Textfield";
 let socketFrontEnd;
 
 const Chat = ({ location, history }) => {
-  const ENDPOINT = "https://git.heroku.com/temp-chat-eric.git";
+  const ENDPOINT = "https://temp-chat-eric.herokuapp.com/";
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [currentMessage, setCurrentMessage] = useState("");
