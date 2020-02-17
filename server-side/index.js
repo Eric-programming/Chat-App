@@ -65,7 +65,7 @@ io.on("connection", socket => {
 
 app.use("/", require("./router")); //Test reason
 app.use(cors());
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 server.listen(PORT, () => {
   console.log(`=========== PORT is starting on ${PORT} ==============`);
